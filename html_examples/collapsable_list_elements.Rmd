@@ -1,0 +1,42 @@
+---
+title: "Collapsable List Items"
+subtitle: "R Markdown Template/Example"
+author: "Michael France Nelson"
+date: "August 2020"
+output:
+  html_document:
+    theme: readable
+    css: !expr here::here("formatting", "css", "eco_602_2020.css")
+    toc: TRUE
+    toc_float: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+# HTML **details** and **summary** tags:
+
+
+You can use html elements to make collapsable items:
+
+<details>
+
+<summary> 
+Item 1 Summary: click here to expand the list
+</summary>
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+- Bullet 4
+
+</details>
+
+
+```{r}
+
+```
+
