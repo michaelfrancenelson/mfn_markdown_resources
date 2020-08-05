@@ -1,0 +1,86 @@
+---
+title: "HTML Document"
+author: "Michael France Nelson"
+date: "March 12, 2020"
+knit: (function(inputFile, encoding) {
+    rmarkdown::render(input = inputFile,
+      encoding = encoding,
+      output_file = here::here("docs", paste0(xfun::sans_ext (basename(inputFile)), ".html"))
+      )
+  })
+output: 
+  html_document:
+    css: !expr here::here("css", "styles.css")
+    number_sections: TRUE
+    toc: true
+    toc_float: true
+    output_dir: "../docs"
+    # output_dir: !expr here::here("docs")
+---
+
+```{r setup, include=FALSE}
+require(here)
+require(ggplot2)
+
+knitr::opts_chunk$set(echo = TRUE, error = TRUE, root.dir = here())
+knitr::opts_knit$set(echo = TRUE, error = TRUE, root.dir = here("docs"))
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+# A simple random walk
+
+## Random Walk Function
+
+A function to build coordinates for simple random walks with fixed step length:
+
+```{r simple random walk fun}
+r_walk = function(n_steps, n_walks)
+{
+  step_length = 1
+  out = data.frame(
+    x = rep(0, n_steps * n_walks), 
+    y = rep(0, n_steps * n_walks),
+    walk = rep(1, n_steps * n_walks)
+  )
+  
+  index = 2
+  
+  for (j in 1:n_walks)
+  {
+    x_i = 0
+    y_i = 0
+    for (i in 1:n_steps)
+    {
+      angle_i = runif(n = 1, min = 0, max = 2 * pi)
+      
+      x_i = x_i - cos(angle_i) * step_length
+      y_i = y_i + sin(angle_i) * step_length
+      
+      out[index, 1] = x_i
+      out[index, 2] = y_i
+      out[index, 3] = as.character(j)
+      
+      i = i + 1
+      index = index + 1
+    }
+  }
+  return(out)
+}
+```
+
+## Random Walk Plot
+
+```{r}
+n_steps = 1000
+n_walks = 15
+
+ggplot(r_walk(n_steps, n_walks), aes(x = x, y = y, col = walk)) + 
+  geom_path() + 
+  coord_fixed() + 
+  theme_dark()
+```
+
+
+
