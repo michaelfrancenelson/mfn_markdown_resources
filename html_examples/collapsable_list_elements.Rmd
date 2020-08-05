@@ -1,5 +1,5 @@
 ---
-title: "Collapsable List Items"
+title: "Collapsable Items"
 subtitle: "R Markdown Template/Example"
 author: "Michael France Nelson"
 date: "August 2020"
@@ -7,25 +7,18 @@ output:
   html_document:
     theme: readable
     css: !expr here::here("formatting", "css", "eco_602_2020.css")
-    toc: TRUE
-    toc_float: TRUE
+    # toc: TRUE
+    # toc_float: TRUE
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-```
 
-
-
-# HTML **details** and **summary** tags:
-
-
-You can use html elements to make collapsable items:
-
-<details>
+chunk_1 = 
+"<details>
 
 <summary> 
-Item 1 Summary: click here to expand the list
+Item 1: Click to see an example!
 </summary>
 
 - Bullet 1
@@ -33,10 +26,81 @@ Item 1 Summary: click here to expand the list
 - Bullet 3
 - Bullet 4
 
+</details>"
+
+chunk_2_1 = 
+"<details>
+
+<summary> 
+Item 2 Summary: click here to view the plot
+</summary>"
+
+chunk_2_2 = "
+plot(rnorm(100), rnorm(100))
+"
+
+chunk_2_3 = "</details>"
+```
+
+
+
+# Using HTML **details** and **summary** tags:
+
+
+
+## Example 1
+
+You can use html elements to make collapsible items like this:
+
+
+```{r results = "asis", comment="", echo = FALSE}
+cat(chunk_1)
+```
+
+<details>
+
+<summary> 
+Click here to see the code I used to make the expandable element:
+</summary>
+
+```{r comment="", echo = FALSE}
+cat(chunk_1)
+```
+
 </details>
 
 
-```{r}
 
+
+## Example 2
+
+You can also include images or plots
+
+
+```{r results = "asis", echo = FALSE}
+cat(chunk_2_1)
 ```
+
+```{r, echo = FALSE}
+eval(parse(text = chunk_2_2))
+```
+
+```{r results = "asis", echo = FALSE}
+cat(chunk_2_3)
+```
+
+
+<details>
+
+<summary> 
+Click here to see the code I used to build the expandable element with plot:
+</summary>
+
+```{r comment="", echo = FALSE}
+cat(paste(chunk_2_1, chunk_2_2, chunk_2_3, sep = "\n"))
+# cat(chunk_2_2)
+# cat(chunk_2_3)
+```
+
+</details>
 
